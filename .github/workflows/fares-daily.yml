@@ -23,6 +23,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # full history so we can rebase before pushing
 
       - uses: actions/setup-python@v5
         with:
@@ -55,10 +57,24 @@ jobs:
           git add data
           if git diff --cached --quiet; then
             echo "no fare-history changes"
-          else
-            git commit -m "chore: update fare history [skip ci]"
-            git push
+            exit 0
           fi
+          git commit -m "chore: update fare history [skip ci]"
+          # Rebase our data commit onto the latest main and retry, so concurrent
+          # changes (other commits, overlapping runs) don't cause a lost push.
+          for attempt in 1 2 3 4 5; do
+            if git push origin HEAD:main; then
+              echo "pushed fare history (attempt $attempt)"
+              exit 0
+            fi
+            echo "push rejected on attempt $attempt; rebasing onto origin/main"
+            git pull --rebase --autostash origin main || {
+              echo "::error::rebase failed (unexpected conflict in data/)"; exit 1;
+            }
+            sleep $((attempt * 3))
+          done
+          echo "::error::could not push fare history after 5 attempts"
+          exit 1
 
       - name: Load report into env
         if: ${{ steps.fares.outputs.should_email == 'true' }}
