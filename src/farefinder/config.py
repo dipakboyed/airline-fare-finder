@@ -99,6 +99,10 @@ class SearchConfig:
             errs.append("amadeus_max_calls_per_run must be >= 0")
         if self.alert_policy not in ALERT_POLICIES:
             errs.append(f"alert_policy must be one of {sorted(ALERT_POLICIES)}")
+        if self.target_price_usd is not None and self.currency != "USD":
+            errs.append(
+                "target_price_usd is USD-denominated; set currency: USD or remove target_price_usd"
+            )
         if errs:
             raise ConfigError("; ".join(errs))
 

@@ -64,10 +64,11 @@ jobs:
       - name: Load report into env
         if: ${{ steps.fares.outputs.should_email == 'true' }}
         run: |
+          DELIM="REPORT_EOF_$(openssl rand -hex 12)"
           {
-            echo "REPORT_HTML<<REPORT_EOF"
+            echo "REPORT_HTML<<$DELIM"
             cat report.html
-            echo "REPORT_EOF"
+            echo "$DELIM"
           } >> "$GITHUB_ENV"
 
       - name: Email fare update

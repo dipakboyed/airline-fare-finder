@@ -93,3 +93,5 @@ def test_client_search_pair_mocks_token_and_offers():
     assert {o.airline for o in offers} == {"QR", "EK"}
     # token endpoint hit once, offers once
     assert len(responses.calls) == 2
+    # the real bearer token must be sent on the flight-offers request
+    assert responses.calls[1].request.headers["Authorization"] == "Bearer tok123"

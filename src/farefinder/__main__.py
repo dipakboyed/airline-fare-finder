@@ -52,7 +52,10 @@ def _write_github_output(**kv):
         return
     with open(out, "a", encoding="utf-8") as fh:
         for key, value in kv.items():
-            fh.write(f"{key}={value}\n")
+            # Single-line outputs: strip CR/LF so a value can't inject extra
+            # key=value lines into the Actions step output.
+            sanitized = str(value).replace("\r", " ").replace("\n", " ")
+            fh.write(f"{key}={sanitized}\n")
 
 
 def cmd_run(args: argparse.Namespace) -> int:

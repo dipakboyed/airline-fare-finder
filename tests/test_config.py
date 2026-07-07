@@ -72,6 +72,19 @@ def test_missing_file():
         load_search_config("does-not-exist.yaml")
 
 
+def test_non_usd_currency_with_usd_target_rejected(tmp_path):
+    text = VALID.replace("currency: USD", "currency: EUR")
+    with pytest.raises(ConfigError):
+        load_search_config(write(tmp_path, text))
+
+
+def test_non_usd_currency_without_target_is_ok(tmp_path):
+    text = VALID.replace("currency: USD", "currency: EUR").replace("target_price_usd: 1500", "target_price_usd:")
+    cfg = load_search_config(write(tmp_path, text), today=date(2026, 1, 1))
+    assert cfg.currency == "EUR"
+    assert cfg.target_price_usd is None
+
+
 def test_repo_sea_ccu_config_is_valid():
     # The shipped config must always load & validate.
     from pathlib import Path
