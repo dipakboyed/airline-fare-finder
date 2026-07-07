@@ -1,4 +1,5 @@
 import json
+import os
 from datetime import date, datetime, timezone
 from pathlib import Path
 
@@ -107,3 +108,21 @@ def test_cli_dry_run_does_not_persist(tmp_path, monkeypatch, capsys):
     assert rc == 0
     capsys.readouterr()
     assert not (data_dir / "latest").exists()  # nothing persisted
+
+
+def test_load_dotenv_sets_missing_but_never_overrides(tmp_path, monkeypatch):
+    env_file = tmp_path / ".env"
+    env_file.write_text(
+        '# comment\nAMADEUS_CLIENT_ID=abc123\nAMADEUS_CLIENT_SECRET="sh h"\nEXISTING=fromfile\n\n',
+        encoding="utf-8",
+    )
+    monkeypatch.delenv("AMADEUS_CLIENT_ID", raising=False)
+    monkeypatch.setenv("EXISTING", "fromenv")  # pre-set -> must NOT be overridden
+    cli.load_dotenv(env_file)
+    assert os.environ["AMADEUS_CLIENT_ID"] == "abc123"
+    assert os.environ["AMADEUS_CLIENT_SECRET"] == "sh h"  # quotes stripped
+    assert os.environ["EXISTING"] == "fromenv"  # existing env wins
+
+
+def test_load_dotenv_missing_file_is_noop(tmp_path):
+    cli.load_dotenv(tmp_path / "nope.env")  # must not raise

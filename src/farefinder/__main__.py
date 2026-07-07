@@ -25,6 +25,26 @@ from .report import build_html, build_subject, build_text
 from .search import run_search
 
 
+def load_dotenv(path: str | Path = ".env") -> None:
+    """Load KEY=VALUE lines from a .env file into os.environ (no override).
+
+    Lightweight, dependency-free. Existing env vars win, so GitHub Actions
+    secrets are never shadowed by a stray local file.
+    """
+    p = Path(path)
+    if not p.exists():
+        return
+    for raw in p.read_text(encoding="utf-8").splitlines():
+        line = raw.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, _, value = line.partition("=")
+        key = key.strip()
+        value = value.strip().strip('"').strip("'")
+        if key:
+            os.environ.setdefault(key, value)
+
+
 def should_email(policy: str, changes: list[CabinChange]) -> bool:
     if not changes:
         return False
@@ -133,6 +153,7 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv=None) -> int:
+    load_dotenv()
     parser = build_parser()
     args = parser.parse_args(argv)
     return args.func(args)

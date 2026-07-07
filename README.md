@@ -49,8 +49,13 @@ See `config/searches/sea-ccu.yaml` for the shipped example.
 python -m venv .venv
 .\.venv\Scripts\pip install -r requirements.txt
 
-# Dry run (no persistence, prints a summary + writes report.html):
+# Option A: copy the template and fill in your keys (.env is gitignored)
+copy .env.example .env   # then edit .env
+
+# Option B: set env vars inline
 $env:AMADEUS_CLIENT_ID="..."; $env:AMADEUS_CLIENT_SECRET="..."
+
+# Dry run (no persistence, prints a summary + writes report.html):
 python -m farefinder run --config config/searches/sea-ccu.yaml --dry-run
 ```
 
