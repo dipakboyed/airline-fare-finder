@@ -1,0 +1,4 @@
+PyYAML>=6.0
+fast-flights>=2.2
+typing_extensions>=4.9
+requests>=2.31

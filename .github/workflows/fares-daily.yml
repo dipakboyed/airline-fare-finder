@@ -1,0 +1,85 @@
+name: fares-daily
+
+on:
+  schedule:
+    # 15:00 UTC = 08:00 America/Los_Angeles (PDT). Adjust as desired.
+    - cron: "0 15 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Run without persisting or emailing"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write   # commit fare history back to the repo
+
+concurrency:
+  group: fares-daily
+  cancel-in-progress: false
+
+jobs:
+  fares:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install .
+
+      - name: Run fare search
+        id: fares
+        env:
+          AMADEUS_CLIENT_ID: ${{ secrets.AMADEUS_CLIENT_ID }}
+          AMADEUS_CLIENT_SECRET: ${{ secrets.AMADEUS_CLIENT_SECRET }}
+          AMADEUS_ENV: production
+        run: |
+          python -m farefinder run \
+            --config-dir config/searches \
+            --data-dir data \
+            --report-out report.html \
+            --text-out report.txt \
+            ${{ inputs.dry_run && '--dry-run' || '' }}
+
+      - name: Commit fare history
+        if: ${{ !inputs.dry_run }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data
+          if git diff --cached --quiet; then
+            echo "no fare-history changes"
+          else
+            git commit -m "chore: update fare history [skip ci]"
+            git push
+          fi
+
+      - name: Load report into env
+        if: ${{ steps.fares.outputs.should_email == 'true' }}
+        run: |
+          {
+            echo "REPORT_HTML<<REPORT_EOF"
+            cat report.html
+            echo "REPORT_EOF"
+          } >> "$GITHUB_ENV"
+
+      - name: Email fare update
+        if: ${{ steps.fares.outputs.should_email == 'true' }}
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          from: airline-fare-finder <${{ secrets.MAIL_USERNAME }}>
+          to: ${{ secrets.MAIL_TO }}
+          subject: ${{ steps.fares.outputs.subject }}
+          html_body: ${{ env.REPORT_HTML }}

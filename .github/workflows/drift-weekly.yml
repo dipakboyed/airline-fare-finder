@@ -1,0 +1,56 @@
+name: drift-weekly
+
+# Weekly ground-truth/drift check: runs the live contract test against the real
+# Amadeus API. If parsers break (schema drift, auth changes, outages), email an
+# alert. Single high-signal check, not a full matrix.
+
+on:
+  schedule:
+    - cron: "0 16 * * 1"   # Mondays 16:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  drift:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt -r requirements-dev.txt
+
+      - name: Live contract test (Amadeus + Google)
+        id: drift
+        continue-on-error: true
+        env:
+          AMADEUS_CLIENT_ID: ${{ secrets.AMADEUS_CLIENT_ID }}
+          AMADEUS_CLIENT_SECRET: ${{ secrets.AMADEUS_CLIENT_SECRET }}
+          AMADEUS_ENV: production
+          FAREFINDER_LIVE_GOOGLE: "1"
+        run: pytest -m live -q
+
+      - name: Email drift alert
+        if: ${{ steps.drift.outcome == 'failure' }}
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          from: airline-fare-finder <${{ secrets.MAIL_USERNAME }}>
+          to: ${{ secrets.MAIL_TO }}
+          subject: "[fare-finder] DRIFT: live contract test failed"
+          body: |
+            The weekly live contract test failed. A provider parser may be broken
+            (Google/Amadeus schema drift, auth/RBAC change, or upstream outage).
+
+            Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}

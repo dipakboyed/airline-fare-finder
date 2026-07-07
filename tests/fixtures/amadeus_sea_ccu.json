@@ -1,0 +1,88 @@
+{
+  "meta": { "count": 3 },
+  "data": [
+    {
+      "type": "flight-offer",
+      "id": "1",
+      "source": "GDS",
+      "validatingAirlineCodes": ["QR"],
+      "itineraries": [
+        {
+          "duration": "PT23H",
+          "segments": [
+            { "departure": { "iataCode": "SEA", "at": "2026-07-21T02:05:00" }, "arrival": { "iataCode": "DOH", "at": "2026-07-22T00:10:00" }, "carrierCode": "QR", "number": "739", "numberOfStops": 0, "id": "1" },
+            { "departure": { "iataCode": "DOH", "at": "2026-07-22T02:00:00" }, "arrival": { "iataCode": "CCU", "at": "2026-07-22T08:35:00" }, "carrierCode": "QR", "number": "540", "numberOfStops": 0, "id": "2" }
+          ]
+        },
+        {
+          "duration": "PT24H",
+          "segments": [
+            { "departure": { "iataCode": "CCU", "at": "2026-08-04T03:30:00" }, "arrival": { "iataCode": "DOH", "at": "2026-08-04T06:05:00" }, "carrierCode": "QR", "number": "541", "numberOfStops": 0, "id": "3" },
+            { "departure": { "iataCode": "DOH", "at": "2026-08-04T08:05:00" }, "arrival": { "iataCode": "SEA", "at": "2026-08-04T16:20:00" }, "carrierCode": "QR", "number": "738", "numberOfStops": 0, "id": "4" }
+          ]
+        }
+      ],
+      "price": { "currency": "USD", "total": "1783.00", "base": "1200.00", "grandTotal": "1783.00" },
+      "travelerPricings": [
+        { "travelerId": "1", "fareOption": "STANDARD", "travelerType": "ADULT", "price": { "currency": "USD", "total": "1783.00" },
+          "fareDetailsBySegment": [ { "segmentId": "1", "cabin": "ECONOMY", "class": "N" }, { "segmentId": "2", "cabin": "ECONOMY", "class": "N" } ] }
+      ]
+    },
+    {
+      "type": "flight-offer",
+      "id": "2",
+      "source": "GDS",
+      "validatingAirlineCodes": ["EK"],
+      "itineraries": [
+        {
+          "duration": "PT25H",
+          "segments": [
+            { "departure": { "iataCode": "SEA", "at": "2026-07-21T15:55:00" }, "arrival": { "iataCode": "DXB", "at": "2026-07-22T19:30:00" }, "carrierCode": "EK", "number": "230", "numberOfStops": 0, "id": "1" },
+            { "departure": { "iataCode": "DXB", "at": "2026-07-22T21:20:00" }, "arrival": { "iataCode": "CCU", "at": "2026-07-23T03:10:00" }, "carrierCode": "EK", "number": "570", "numberOfStops": 0, "id": "2" }
+          ]
+        },
+        {
+          "duration": "PT26H",
+          "segments": [
+            { "departure": { "iataCode": "CCU", "at": "2026-08-04T04:20:00" }, "arrival": { "iataCode": "DXB", "at": "2026-08-04T07:25:00" }, "carrierCode": "EK", "number": "571", "numberOfStops": 0, "id": "3" },
+            { "departure": { "iataCode": "DXB", "at": "2026-08-04T09:30:00" }, "arrival": { "iataCode": "SEA", "at": "2026-08-04T18:05:00" }, "carrierCode": "EK", "number": "229", "numberOfStops": 0, "id": "4" }
+          ]
+        }
+      ],
+      "price": { "currency": "USD", "total": "2661.00", "base": "1900.00", "grandTotal": "2661.00" },
+      "travelerPricings": [
+        { "travelerId": "1", "fareOption": "STANDARD", "travelerType": "ADULT", "price": { "currency": "USD", "total": "2661.00" },
+          "fareDetailsBySegment": [ { "segmentId": "1", "cabin": "ECONOMY", "class": "U" }, { "segmentId": "2", "cabin": "ECONOMY", "class": "U" } ] }
+      ]
+    },
+    {
+      "type": "flight-offer",
+      "id": "3",
+      "source": "GDS",
+      "validatingAirlineCodes": ["UA"],
+      "itineraries": [
+        {
+          "duration": "PT31H",
+          "segments": [
+            { "departure": { "iataCode": "SEA", "at": "2026-07-21T06:00:00" }, "arrival": { "iataCode": "EWR", "at": "2026-07-21T14:30:00" }, "carrierCode": "UA", "number": "100", "numberOfStops": 0, "id": "1" },
+            { "departure": { "iataCode": "EWR", "at": "2026-07-21T20:30:00" }, "arrival": { "iataCode": "DEL", "at": "2026-07-22T20:00:00" }, "carrierCode": "UA", "number": "82", "numberOfStops": 0, "id": "2" },
+            { "departure": { "iataCode": "DEL", "at": "2026-07-22T23:00:00" }, "arrival": { "iataCode": "CCU", "at": "2026-07-23T01:15:00" }, "carrierCode": "AI", "number": "764", "numberOfStops": 0, "id": "3" }
+          ]
+        },
+        {
+          "duration": "PT30H",
+          "segments": [
+            { "departure": { "iataCode": "CCU", "at": "2026-08-04T02:00:00" }, "arrival": { "iataCode": "DEL", "at": "2026-08-04T04:20:00" }, "carrierCode": "AI", "number": "765", "numberOfStops": 0, "id": "4" },
+            { "departure": { "iataCode": "DEL", "at": "2026-08-04T09:00:00" }, "arrival": { "iataCode": "EWR", "at": "2026-08-04T14:30:00" }, "carrierCode": "UA", "number": "83", "numberOfStops": 0, "id": "5" },
+            { "departure": { "iataCode": "EWR", "at": "2026-08-04T18:00:00" }, "arrival": { "iataCode": "SEA", "at": "2026-08-04T21:00:00" }, "carrierCode": "UA", "number": "101", "numberOfStops": 0, "id": "6" }
+          ]
+        }
+      ],
+      "price": { "currency": "USD", "total": "1400.00", "base": "980.00", "grandTotal": "1400.00" },
+      "travelerPricings": [
+        { "travelerId": "1", "fareOption": "STANDARD", "travelerType": "ADULT", "price": { "currency": "USD", "total": "1400.00" },
+          "fareDetailsBySegment": [ { "segmentId": "1", "cabin": "ECONOMY", "class": "T" } ] }
+      ]
+    }
+  ]
+}

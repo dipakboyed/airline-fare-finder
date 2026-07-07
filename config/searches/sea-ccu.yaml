@@ -1,0 +1,35 @@
+# Case #1: SEA -> CCU, next 3 weeks, 10-20 day trip, best fare per cabin.
+name: sea-ccu
+origin: SEA
+destination: CCU
+max_stops: 1
+
+# Departure window. Relative tokens: "today", "+Nd". Or an ISO date (YYYY-MM-DD).
+depart_window:
+  from: today
+  to: +21d
+
+# Inclusive [min, max] total trip length in days.
+trip_length_days: [10, 20]
+
+cabins: [ECONOMY, PREMIUM_ECONOMY, BUSINESS]
+
+# IATA airline codes: Singapore, Emirates, Qatar (all offer 1-stop SEA->CCU).
+preferred_airlines: [SQ, EK, QR]
+
+passengers: 1
+currency: USD
+
+# Fares at or below this (USD) are flagged as deals.
+target_price_usd: 1500
+
+# When to email: only_drops | every_run | only_target | every_run_plus_drops
+alert_policy: only_drops
+
+# Coarse-first sampling to keep the search cheap; tune reactively.
+sampling:
+  depart_step_days: 1
+  trip_length_step_days: 2
+
+# Max Amadeus confirmations per run (quota guard; free tier ~2000 calls/month).
+amadeus_max_calls_per_run: 15
