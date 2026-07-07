@@ -81,6 +81,15 @@ Without Amadeus creds it still runs Google-only (results marked unverified).
 Add them under **Settings &rarr; Secrets and variables &rarr; Actions**. Nothing
 sensitive is ever committed.
 
+Or set them all interactively (hidden input, optional local `.env`):
+
+```powershell
+.\scripts\set-secrets.ps1 -WriteEnv
+```
+
+`AMADEUS_ENV` (optional secret) selects `test` vs `production`; it defaults to
+`production` in the workflows if unset.
+
 ## Testing
 
 ```powershell

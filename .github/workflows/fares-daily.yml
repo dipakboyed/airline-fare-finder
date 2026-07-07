@@ -39,7 +39,7 @@ jobs:
         env:
           AMADEUS_CLIENT_ID: ${{ secrets.AMADEUS_CLIENT_ID }}
           AMADEUS_CLIENT_SECRET: ${{ secrets.AMADEUS_CLIENT_SECRET }}
-          AMADEUS_ENV: production
+          AMADEUS_ENV: ${{ secrets.AMADEUS_ENV || 'production' }}
         run: |
           python -m farefinder run \
             --config-dir config/searches \

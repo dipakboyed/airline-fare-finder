@@ -33,7 +33,7 @@ jobs:
         env:
           AMADEUS_CLIENT_ID: ${{ secrets.AMADEUS_CLIENT_ID }}
           AMADEUS_CLIENT_SECRET: ${{ secrets.AMADEUS_CLIENT_SECRET }}
-          AMADEUS_ENV: production
+          AMADEUS_ENV: ${{ secrets.AMADEUS_ENV || 'production' }}
           FAREFINDER_LIVE_GOOGLE: "1"
         run: pytest -m live -q
 
