@@ -62,7 +62,7 @@ class SearchConfig:
     target_price_usd: float | None
     alert_policy: str
     sampling: Sampling
-    amadeus_max_calls_per_run: int
+    crosscheck_max_calls_per_run: int
     source_path: Path | None = None
 
     def validate(self) -> None:
@@ -95,8 +95,8 @@ class SearchConfig:
             errs.append("currency required")
         if self.sampling.depart_step_days < 1 or self.sampling.trip_length_step_days < 1:
             errs.append("sampling steps must be >= 1")
-        if self.amadeus_max_calls_per_run < 0:
-            errs.append("amadeus_max_calls_per_run must be >= 0")
+        if self.crosscheck_max_calls_per_run < 0:
+            errs.append("crosscheck_max_calls_per_run must be >= 0")
         if self.alert_policy not in ALERT_POLICIES:
             errs.append(f"alert_policy must be one of {sorted(ALERT_POLICIES)}")
         if self.target_price_usd is not None and self.currency != "USD":
@@ -138,7 +138,7 @@ def load_search_config(path: str | Path, today: date | None = None) -> SearchCon
                 depart_step_days=int(samp.get("depart_step_days", 1)),
                 trip_length_step_days=int(samp.get("trip_length_step_days", 1)),
             ),
-            amadeus_max_calls_per_run=int(raw.get("amadeus_max_calls_per_run", 15)),
+            crosscheck_max_calls_per_run=int(raw.get("crosscheck_max_calls_per_run", 15)),
             source_path=path,
         )
     except (KeyError, TypeError, ValueError, IndexError) as exc:

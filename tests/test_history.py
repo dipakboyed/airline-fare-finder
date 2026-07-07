@@ -11,7 +11,7 @@ from farefinder.models import FareOffer, utcnow
 from farefinder.search import RunResult
 
 
-def offer(cabin, airline, price, source="amadeus"):
+def offer(cabin, airline, price, source="travelpayouts"):
     return FareOffer(
         origin="SEA", destination="CCU", depart_date=date(2026, 7, 21),
         return_date=date(2026, 8, 4), cabin=cabin, airline=airline, price=price,
@@ -24,7 +24,7 @@ def make_result(best, when=None):
     return RunResult(
         config_name="sea-ccu", origin="SEA", destination="CCU",
         generated_at=when or datetime(2026, 7, 7, 12, 0, tzinfo=timezone.utc),
-        best_by_cabin=best, all_offers=list(best.values()), amadeus_calls=2,
+        best_by_cabin=best, all_offers=list(best.values()), crosscheck_calls=2,
         google_offer_count=3, date_pairs=50,
     )
 

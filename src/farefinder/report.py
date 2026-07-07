@@ -115,5 +115,5 @@ def build_html(cfg: SearchConfig, changes: list[CabinChange], notes: list[str]) 
 <tbody>{''.join(rows)}</tbody>
 </table>
 {notes_html}
-<p style="color:#aaa;font-size:11px">airline-fare-finder &middot; best fare per cabin, Amadeus-verified where available</p>
+<p style="color:#aaa;font-size:11px">airline-fare-finder &middot; best fare per cabin (Google Flights + Travelpayouts economy cross-check)</p>
 </body></html>"""

@@ -10,7 +10,7 @@ def _offer(cabin, airline, price):
     return FareOffer(
         origin="SEA", destination="CCU", depart_date=date(2026, 7, 21),
         return_date=date(2026, 8, 4), cabin=cabin, airline=airline, price=price,
-        currency="USD", stops_out=1, stops_ret=1, source="amadeus",
+        currency="USD", stops_out=1, stops_ret=1, source="travelpayouts",
         booking_url="https://www.google.com/travel/flights?q=x", fetched_at=utcnow(),
     )
 
@@ -19,7 +19,7 @@ def _change(cabin, airline, price, prev=None, target=1500):
     o = _offer(cabin, airline, price)
     delta = (price - prev) if prev is not None else None
     return CabinChange(
-        cabin=cabin, airline=airline, price=price, currency="USD", source="amadeus",
+        cabin=cabin, airline=airline, price=price, currency="USD", source="travelpayouts",
         prev_price=prev, delta=delta, is_drop=delta is not None and delta < 0,
         is_new=prev is None, is_deal=target is not None and price <= target, offer=o,
     )
@@ -32,7 +32,7 @@ def _cfg():
         trip_min_days=10, trip_max_days=20, cabins=("ECONOMY", "BUSINESS"),
         preferred_airlines=("SQ", "EK", "QR"), passengers=1, currency="USD",
         target_price_usd=1500.0, alert_policy="only_drops", sampling=Sampling(1, 2),
-        amadeus_max_calls_per_run=15,
+        crosscheck_max_calls_per_run=15,
     )
 
 

@@ -1,0 +1,66 @@
+{
+  "success": true,
+  "currency": "USD",
+  "data": [
+    {
+      "origin": "SEA",
+      "destination": "CCU",
+      "airline": "QR",
+      "flight_number": "739",
+      "departure_at": "2026-07-21T02:05:00-07:00",
+      "return_at": "2026-08-04T03:30:00+05:30",
+      "price": 1720,
+      "transfers": 1,
+      "return_transfers": 1,
+      "duration": 2400,
+      "link": "/search/SEA2107CCU0408?search_params=QR",
+      "expires_at": "2026-07-10T23:59:59Z",
+      "found_at": "2026-07-06T12:34:56Z"
+    },
+    {
+      "origin": "SEA",
+      "destination": "CCU",
+      "airline": "EK",
+      "flight_number": "230",
+      "departure_at": "2026-07-21T15:55:00-07:00",
+      "return_at": "2026-08-04T04:20:00+05:30",
+      "price": 2500,
+      "transfers": 1,
+      "return_transfers": 1,
+      "duration": 2600,
+      "link": "https://www.aviasales.com/search/SEA2107CCU0408EK",
+      "expires_at": "2026-07-10T23:59:59Z",
+      "found_at": "2026-07-06T09:10:00Z"
+    },
+    {
+      "origin": "SEA",
+      "destination": "CCU",
+      "airline": "UA",
+      "flight_number": "100",
+      "departure_at": "2026-07-21T06:00:00-07:00",
+      "return_at": "2026-08-04T02:00:00+05:30",
+      "price": 1350,
+      "transfers": 2,
+      "return_transfers": 2,
+      "duration": 3100,
+      "link": "/search/SEA2107CCU0408UA",
+      "expires_at": "2026-07-10T23:59:59Z",
+      "found_at": "2026-07-05T22:00:00Z"
+    },
+    {
+      "origin": "SEA",
+      "destination": "CCU",
+      "airline": "AI",
+      "flight_number": "126",
+      "departure_at": "2026-07-21T09:00:00-07:00",
+      "return_at": "2026-08-04T01:15:00+05:30",
+      "price": 1490,
+      "transfers": 1,
+      "return_transfers": 1,
+      "duration": 2500,
+      "link": "/search/SEA2107CCU0408AI",
+      "expires_at": "2026-07-10T23:59:59Z",
+      "found_at": "2026-07-06T01:00:00Z"
+    }
+  ]
+}

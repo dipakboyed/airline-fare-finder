@@ -49,41 +49,34 @@ function Set-GhSecret {
 Write-Host "Setting secrets on $Repo (gh account: $GhUser)`n" -ForegroundColor Cyan
 gh auth switch --user $GhUser | Out-Null
 
-# --- Amadeus (https://developers.amadeus.com -> My Self-Service Workspace) ---
-Write-Host "[1/6] Amadeus API Key (Client ID)"
-$amadeusId = Read-Plain "      AMADEUS_CLIENT_ID"
+# --- Travelpayouts (https://www.travelpayouts.com -> Developers -> API tokens) ---
+Write-Host "[1/5] Travelpayouts API token"
+$tpToken = Read-Secret "      TRAVELPAYOUTS_TOKEN"
 
-Write-Host "[2/6] Amadeus API Secret (hidden)"
-$amadeusSecret = Read-Secret "      AMADEUS_CLIENT_SECRET"
-
-Write-Host "[3/6] Amadeus environment: 'test' or 'production' [test]"
-$amadeusEnv = Read-Plain "      AMADEUS_ENV" "test"
+Write-Host "[2/5] Travelpayouts marker (optional affiliate id; Enter to skip)"
+$tpMarker = Read-Plain "      TRAVELPAYOUTS_MARKER"
 
 # --- Gmail (optional; myaccount.google.com -> Security -> App passwords) ---
-Write-Host "`n[4/6] Gmail sender address (optional; Enter to skip email)"
+Write-Host "`n[3/5] Gmail sender address (optional; Enter to skip email)"
 $mailUser = Read-Plain "      MAIL_USERNAME"
 
-Write-Host "[5/6] Gmail App Password (hidden; optional)"
+Write-Host "[4/5] Gmail App Password (hidden; optional)"
 $mailPass = Read-Secret "      MAIL_PASSWORD"
 
-Write-Host "[6/6] Deliver reports to [diboyed@gmail.com]"
+Write-Host "[5/5] Deliver reports to [diboyed@gmail.com]"
 $mailTo = Read-Plain "      MAIL_TO" "diboyed@gmail.com"
 
 Write-Host "`nPushing secrets..." -ForegroundColor Cyan
-Set-GhSecret "AMADEUS_CLIENT_ID"     $amadeusId
-Set-GhSecret "AMADEUS_CLIENT_SECRET" $amadeusSecret
-Set-GhSecret "AMADEUS_ENV"           $amadeusEnv
-Set-GhSecret "MAIL_USERNAME"         $mailUser
-Set-GhSecret "MAIL_PASSWORD"         $mailPass
-Set-GhSecret "MAIL_TO"               $mailTo
+Set-GhSecret "TRAVELPAYOUTS_TOKEN"  $tpToken
+Set-GhSecret "TRAVELPAYOUTS_MARKER" $tpMarker
+Set-GhSecret "MAIL_USERNAME"        $mailUser
+Set-GhSecret "MAIL_PASSWORD"        $mailPass
+Set-GhSecret "MAIL_TO"              $mailTo
 
 if ($WriteEnv) {
     $envPath = Join-Path (Split-Path $PSScriptRoot -Parent) ".env"
-    $lines = @(
-        "AMADEUS_CLIENT_ID=$amadeusId",
-        "AMADEUS_CLIENT_SECRET=$amadeusSecret",
-        "AMADEUS_ENV=$amadeusEnv"
-    )
+    $lines = @("TRAVELPAYOUTS_TOKEN=$tpToken")
+    if ($tpMarker) { $lines += "TRAVELPAYOUTS_MARKER=$tpMarker" }
     if ($mailUser) { $lines += "MAIL_USERNAME=$mailUser" }
     if ($mailPass) { $lines += "MAIL_PASSWORD=$mailPass" }
     if ($mailTo)   { $lines += "MAIL_TO=$mailTo" }

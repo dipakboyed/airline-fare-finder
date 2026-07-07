@@ -20,7 +20,7 @@ def make_cfg(**over):
         currency="USD",
         target_price_usd=1500.0,
         sampling=Sampling(1, 2),
-        amadeus_max_calls_per_run=15,
+        crosscheck_max_calls_per_run=15,
         alert_policy="only_drops",
     )
     base.update(over)

@@ -12,13 +12,19 @@ a genuine 1-stop routing via SIN / DXB / DOH).
 ## How it works
 
 1. **Google Flights** (via [`fast-flights`](https://pypi.org/project/fast-flights/))
-   sweeps the full date matrix for free — the breadth scanner.
-2. **Amadeus** (Self-Service, free tier) authoritatively confirms the cheapest
-   candidates per cabin, capped by a per-run quota guard.
-3. Best fare per cabin **prefers Amadeus** when available, else Google.
+   sweeps the full date matrix per cabin — the primary source (Economy /
+   Premium Economy / Business), real-time-ish and free.
+2. **Travelpayouts / Aviasales** (free Flight Data API, no per-call quota)
+   cross-checks the cheapest **Economy** candidates and contributes real
+   Aviasales booking links. It's economy-only (no cabin parameter).
+3. Best fare per cabin = **cheapest across sources**, tagged with its origin.
 4. Results are snapshotted under `data/`; the next run diffs against them to
    detect **drops** and **deals** (fares at/under your target price).
 5. Email is sent per your `alert_policy` (default: **only on drops**).
+
+> Note: Amadeus Self-Service is decommissioned on 2026-07-17, so this tool uses
+> Google Flights + Travelpayouts instead. The provider layer is pluggable —
+> swapping in another source is a single new file under `providers/`.
 
 ## Add a new trip (no code changes)
 
@@ -38,7 +44,7 @@ currency: USD
 target_price_usd: 900
 alert_policy: only_drops        # only_drops | every_run | only_target | every_run_plus_drops
 sampling: { depart_step_days: 1, trip_length_step_days: 2 }
-amadeus_max_calls_per_run: 15   # free-tier quota guard (~2000 calls/month)
+crosscheck_max_calls_per_run: 15   # cap on Travelpayouts economy cross-checks per run
 ```
 
 See `config/searches/sea-ccu.yaml` for the shipped example.
@@ -53,13 +59,13 @@ python -m venv .venv
 copy .env.example .env   # then edit .env
 
 # Option B: set env vars inline
-$env:AMADEUS_CLIENT_ID="..."; $env:AMADEUS_CLIENT_SECRET="..."
+$env:TRAVELPAYOUTS_TOKEN="..."
 
 # Dry run (no persistence, prints a summary + writes report.html):
 python -m farefinder run --config config/searches/sea-ccu.yaml --dry-run
 ```
 
-Without Amadeus creds it still runs Google-only (results marked unverified).
+Without a Travelpayouts token it still runs Google-only (no economy cross-check).
 
 ## Scheduling & email (GitHub Actions)
 
@@ -73,7 +79,8 @@ Without Amadeus creds it still runs Google-only (results marked unverified).
 
 | Secret | What |
 |---|---|
-| `AMADEUS_CLIENT_ID` / `AMADEUS_CLIENT_SECRET` | Free production key from [developers.amadeus.com](https://developers.amadeus.com) |
+| `TRAVELPAYOUTS_TOKEN` | Free API token from [travelpayouts.com](https://www.travelpayouts.com) → Developers → API tokens |
+| `TRAVELPAYOUTS_MARKER` | Optional affiliate marker appended to Aviasales booking links |
 | `MAIL_USERNAME` | Gmail address that sends the report |
 | `MAIL_PASSWORD` | Gmail **app password** (not your account password) |
 | `MAIL_TO` | Where reports are delivered |
@@ -87,9 +94,6 @@ Or set them all interactively (hidden input, optional local `.env`):
 .\scripts\set-secrets.ps1 -WriteEnv
 ```
 
-`AMADEUS_ENV` (optional secret) selects `test` vs `production`; it defaults to
-`production` in the workflows if unset.
-
 ## Testing
 
 ```powershell
@@ -99,7 +103,7 @@ Or set them all interactively (hidden input, optional local `.env`):
 ```
 
 The suite validates parsers against recorded fixtures and **ground-truths**
-Amadeus output against the raw API response. Live smoke + weekly drift catch
+provider output against the raw API response. Live smoke + weekly drift catch
 upstream schema changes.
 
 ## Layout

@@ -1,8 +1,8 @@
 name: drift-weekly
 
 # Weekly ground-truth/drift check: runs the live contract test against the real
-# Amadeus API. If parsers break (schema drift, auth changes, outages), email an
-# alert. Single high-signal check, not a full matrix.
+# provider APIs (Google Flights + Travelpayouts). If parsers break (schema
+# drift, auth changes, outages), email an alert. Single high-signal check.
 
 on:
   schedule:
@@ -27,13 +27,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt -r requirements-dev.txt
 
-      - name: Live contract test (Amadeus + Google)
+      - name: Live contract test (Google + Travelpayouts)
         id: drift
         continue-on-error: true
         env:
-          AMADEUS_CLIENT_ID: ${{ secrets.AMADEUS_CLIENT_ID }}
-          AMADEUS_CLIENT_SECRET: ${{ secrets.AMADEUS_CLIENT_SECRET }}
-          AMADEUS_ENV: ${{ secrets.AMADEUS_ENV || 'production' }}
+          TRAVELPAYOUTS_TOKEN: ${{ secrets.TRAVELPAYOUTS_TOKEN }}
+          TRAVELPAYOUTS_MARKER: ${{ secrets.TRAVELPAYOUTS_MARKER }}
           FAREFINDER_LIVE_GOOGLE: "1"
         run: pytest -m live -q
 
@@ -51,6 +50,6 @@ jobs:
           subject: "[fare-finder] DRIFT: live contract test failed"
           body: |
             The weekly live contract test failed. A provider parser may be broken
-            (Google/Amadeus schema drift, auth/RBAC change, or upstream outage).
+            (Google/Travelpayouts schema drift, auth change, or upstream outage).
 
             Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}

@@ -31,5 +31,5 @@ sampling:
   depart_step_days: 1
   trip_length_step_days: 2
 
-# Max Amadeus confirmations per run (quota guard; free tier ~2000 calls/month).
-amadeus_max_calls_per_run: 15
+# Max cross-check (Travelpayouts) confirmations per run.
+crosscheck_max_calls_per_run: 15

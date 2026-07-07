@@ -109,7 +109,7 @@ def cmd_run(args: argparse.Namespace) -> int:
                 "config": cfg.name,
                 "route": f"{cfg.origin}->{cfg.destination}",
                 "should_email": emit,
-                "amadeus_calls": result.amadeus_calls,
+                "crosscheck_calls": result.crosscheck_calls,
                 "google_offers": result.google_offer_count,
                 "date_pairs": result.date_pairs,
                 "best": {c: {"price": o.price, "airline": o.airline, "source": o.source}

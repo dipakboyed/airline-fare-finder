@@ -26,7 +26,7 @@ passengers: 1
 currency: USD
 target_price_usd: 1500
 sampling: {depart_step_days: 1, trip_length_step_days: 2}
-amadeus_max_calls_per_run: 15
+crosscheck_max_calls_per_run: 15
 """
 
 

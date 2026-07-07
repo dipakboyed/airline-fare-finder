@@ -2,12 +2,13 @@
 
 We fetch the HTML with fast-flights but parse the embedded JSON ourselves,
 defensively — the library's own parser crashes on itineraries whose price is
-hidden by Google. Google is our free breadth scanner; Amadeus is authoritative.
+hidden by Google. Google is our per-cabin source; Travelpayouts cross-checks
+economy.
 
 Round-trip note: Google returns outbound itineraries with a *total round-trip*
 price. The return leg's segments aren't exposed until you pick an outbound, so
 `stops_ret` mirrors `stops_out` (both legs are constrained to <= max_stops by
-the query anyway). Amadeus supplies exact per-leg stop counts.
+the query anyway). Travelpayouts supplies per-leg transfer counts.
 """
 from __future__ import annotations
 

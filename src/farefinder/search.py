@@ -1,13 +1,16 @@
-"""Orchestrate a fare search: Google breadth sweep + Amadeus confirmation.
+"""Orchestrate a fare search: Google breadth sweep + Travelpayouts cross-check.
 
-Strategy (quota-aware):
-  1. Google Flights sweeps the full (date-pair x cabin) matrix cheaply.
-  2. The cheapest Google candidates per cabin are re-checked against Amadeus,
-     up to `amadeus_max_calls_per_run` (free-tier quota guard).
-  3. Best fare per cabin prefers Amadeus (authoritative) when available,
-     else falls back to the cheapest Google offer.
+Strategy:
+  1. Google Flights sweeps the full (date-pair x cabin) matrix — the per-cabin
+     source (Economy / Premium Economy / Business), real-time-ish, free.
+  2. The cheapest Google ECONOMY candidates are cross-checked against
+     Travelpayouts (free, no quota; economy-only cached fares), up to
+     `crosscheck_max_calls_per_run`.
+  3. Best fare per cabin = cheapest across all sources (min price), tagged with
+     its source. Travelpayouts adds an independent economy signal + real
+     Aviasales booking links.
 If Google returns nothing (e.g. blocked in CI), we fall back to sampling the
-matrix directly against Amadeus within the same call budget.
+matrix directly against Travelpayouts (economy) within the same budget.
 """
 from __future__ import annotations
 
@@ -17,19 +20,23 @@ from datetime import date, datetime
 from .config import SearchConfig
 from .dates import generate_date_matrix
 from .models import FareOffer, utcnow
-from .providers.amadeus import AmadeusClient
 from .providers.google_flights import GoogleFlightsProvider
+from .providers.travelpayouts import TravelpayoutsProvider
 
 
-def best_per_cabin(offers: list[FareOffer], prefer_source: str = "amadeus") -> dict[str, FareOffer]:
-    """Cheapest offer per cabin, preferring `prefer_source` when present."""
+def best_per_cabin(offers: list[FareOffer], prefer_source: str | None = None) -> dict[str, FareOffer]:
+    """Cheapest offer per cabin. If `prefer_source` is set and present for a
+    cabin, restrict that cabin to it; otherwise pick the cheapest across sources.
+    """
     by_cabin: dict[str, list[FareOffer]] = {}
     for o in offers:
         by_cabin.setdefault(o.cabin, []).append(o)
     best: dict[str, FareOffer] = {}
     for cabin, group in by_cabin.items():
-        preferred = [o for o in group if o.source == prefer_source]
-        pool = preferred or group
+        pool = group
+        if prefer_source:
+            preferred = [o for o in group if o.source == prefer_source]
+            pool = preferred or group
         best[cabin] = min(pool, key=lambda o: o.price)
     return best
 
@@ -71,7 +78,7 @@ class RunResult:
     generated_at: datetime
     best_by_cabin: dict[str, FareOffer]
     all_offers: list[FareOffer]
-    amadeus_calls: int
+    crosscheck_calls: int
     google_offer_count: int
     date_pairs: int = 0
     notes: list[str] = field(default_factory=list)
@@ -84,7 +91,7 @@ class RunResult:
             "generated_at": self.generated_at.isoformat(),
             "best_by_cabin": {c: o.to_dict() for c, o in self.best_by_cabin.items()},
             "all_offers": [o.to_dict() for o in self.all_offers],
-            "amadeus_calls": self.amadeus_calls,
+            "crosscheck_calls": self.crosscheck_calls,
             "google_offer_count": self.google_offer_count,
             "date_pairs": self.date_pairs,
             "notes": self.notes,
@@ -94,11 +101,11 @@ class RunResult:
 def run_search(
     cfg: SearchConfig,
     google: GoogleFlightsProvider | None = None,
-    amadeus: AmadeusClient | None = None,
+    crosscheck: TravelpayoutsProvider | None = None,
     top_n: int = 3,
 ) -> RunResult:
     google = google or GoogleFlightsProvider()
-    amadeus = amadeus or AmadeusClient()
+    crosscheck = crosscheck or TravelpayoutsProvider()
 
     matrix = generate_date_matrix(cfg)
     notes: list[str] = []
@@ -106,25 +113,27 @@ def run_search(
     google_offers = google.search(cfg, matrix, cfg.cabins)
     all_offers: list[FareOffer] = list(google_offers)
     if not google_offers:
-        notes.append("google returned no offers (possibly blocked); relying on Amadeus")
+        notes.append("google returned no offers (possibly blocked); relying on cross-check")
 
-    amadeus_calls = 0
-    budget = cfg.amadeus_max_calls_per_run
-    if amadeus.configured and budget > 0:
+    # Travelpayouts is economy-only, so cross-check only the ECONOMY cabin.
+    econ_cabins = ["ECONOMY"] if "ECONOMY" in cfg.cabins else []
+    crosscheck_calls = 0
+    budget = cfg.crosscheck_max_calls_per_run
+    if crosscheck.configured and budget > 0 and econ_cabins:
         if google_offers:
-            candidates = _top_candidates(google_offers, cfg.cabins, top_n)
+            candidates = _top_candidates(google_offers, econ_cabins, top_n)
         else:
-            candidates = _fallback_candidates(matrix, cfg.cabins, budget)
+            candidates = _fallback_candidates(matrix, econ_cabins, budget)
         for dep, ret, cabin in candidates:
-            if amadeus_calls >= budget:
+            if crosscheck_calls >= budget:
                 break
-            amadeus_calls += 1
+            crosscheck_calls += 1
             try:
-                all_offers.extend(amadeus.search_pair(cfg, dep, ret, cabin))
+                all_offers.extend(crosscheck.search_pair(cfg, dep, ret, cabin))
             except Exception as exc:  # noqa: BLE001 - provider failures shouldn't kill the run
-                notes.append(f"amadeus error for {dep}->{ret} {cabin}: {exc}")
-    elif not amadeus.configured:
-        notes.append("amadeus not configured; results are Google-only (unverified)")
+                notes.append(f"crosscheck error for {dep}->{ret} {cabin}: {exc}")
+    elif not crosscheck.configured:
+        notes.append("cross-check (Travelpayouts) not configured; results are Google-only")
 
     return RunResult(
         config_name=cfg.name,
@@ -133,7 +142,7 @@ def run_search(
         generated_at=utcnow(),
         best_by_cabin=best_per_cabin(all_offers),
         all_offers=all_offers,
-        amadeus_calls=amadeus_calls,
+        crosscheck_calls=crosscheck_calls,
         google_offer_count=len(google_offers),
         date_pairs=len(matrix),
         notes=notes,

@@ -9,8 +9,8 @@ from datetime import date, timedelta
 import pytest
 
 from farefinder.config import SearchConfig, Sampling
-from farefinder.providers.amadeus import AmadeusClient
 from farefinder.providers.google_flights import GoogleFlightsProvider
+from farefinder.providers.travelpayouts import TravelpayoutsProvider
 
 pytestmark = pytest.mark.live
 
@@ -22,19 +22,19 @@ def _cfg():
         depart_from=dep, depart_to=dep, trip_min_days=14, trip_max_days=14,
         cabins=("ECONOMY",), preferred_airlines=("SQ", "EK", "QR"), passengers=1,
         currency="USD", target_price_usd=1500.0, sampling=Sampling(1, 1),
-        amadeus_max_calls_per_run=15, alert_policy="only_drops",
+        crosscheck_max_calls_per_run=15, alert_policy="only_drops",
     )
 
 
 @pytest.mark.skipif(
-    not (os.environ.get("AMADEUS_CLIENT_ID") and os.environ.get("AMADEUS_CLIENT_SECRET")),
-    reason="Amadeus creds not set",
+    not os.environ.get("TRAVELPAYOUTS_TOKEN"),
+    reason="Travelpayouts token not set",
 )
-def test_amadeus_live_returns_wellformed_offers():
+def test_travelpayouts_live_returns_wellformed_offers():
     cfg = _cfg()
     dep = cfg.depart_from
     ret = dep + timedelta(days=14)
-    offers = AmadeusClient().search_pair(cfg, dep, ret, "ECONOMY")
+    offers = TravelpayoutsProvider().search_pair(cfg, dep, ret, "ECONOMY")
     # May be empty on a given date, but any returned offer must be well-formed.
     for o in offers:
         assert o.is_well_formed()

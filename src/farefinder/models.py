@@ -28,7 +28,7 @@ class FareOffer:
     currency: str
     stops_out: int
     stops_ret: int
-    source: str             # "amadeus" | "google"
+    source: str             # "google" | "travelpayouts"
     booking_url: str
     fetched_at: datetime
 
@@ -55,7 +55,7 @@ class FareOffer:
             and bool(self.currency)
             and self.stops_out >= 0
             and self.stops_ret >= 0
-            and self.source in {"amadeus", "google"}
+            and self.source in {"google", "travelpayouts"}
             and self.booking_url.startswith("http")
         )
 
