@@ -80,7 +80,6 @@ Without a Travelpayouts token it still runs Google-only (no economy cross-check)
 | Secret | What |
 |---|---|
 | `TRAVELPAYOUTS_TOKEN` | Free API token from [travelpayouts.com](https://www.travelpayouts.com) → Developers → API tokens |
-| `TRAVELPAYOUTS_MARKER` | Optional affiliate marker appended to Aviasales booking links |
 | `MAIL_USERNAME` | Gmail address that sends the report |
 | `MAIL_PASSWORD` | Gmail **app password** (not your account password) |
 | `MAIL_TO` | Where reports are delivered |
