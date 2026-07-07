@@ -24,3 +24,23 @@ secrets.*
 .DS_Store
 .idea/
 .vscode/
+
+# Tool run outputs (reports are regenerated every run; never commit)
+report.html
+report.txt
+report*.html
+report*.txt
+*.report.html
+*.report.txt
+
+# Throwaway local search configs (e.g. quick smoke tests at repo root)
+/quick.yaml
+/scratch*.yaml
+
+# CodeQL local scan artifacts
+*.sarif
+codeql-results/
+db-python/
+db-actions/
+cql.tar.gz
+
