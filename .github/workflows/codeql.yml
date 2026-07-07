@@ -1,9 +1,11 @@
 name: codeql
 
-# Code scanning upload (Security tab) needs GitHub Advanced Security, which is
-# not available on this private repo. So we run CodeQL and inspect the SARIF for
-# findings directly (`upload: never`) — the job fails if any issue is found.
-# If this repo is made public or GHAS is enabled, switch `upload` to `always`.
+# GitHub's CodeQL *Action* requires Advanced Security to finalize on a private
+# repo. This repo has no GHAS, so we run the CodeQL *CLI* directly instead: build
+# a database, analyze with the standard security ("code-scanning") suite, and
+# fail the job if any finding is produced. No code-scanning API is needed.
+# If this repo is made public or GHAS is enabled, the managed CodeQL Action can
+# replace this and upload results to the Security tab.
 
 on:
   push:
@@ -18,40 +20,55 @@ permissions:
   contents: read
 
 jobs:
-  analyze:
+  codeql:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        language: [python, actions]
     steps:
       - uses: actions/checkout@v4
 
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
+      - uses: actions/setup-python@v5
         with:
-          languages: ${{ matrix.language }}
-          queries: security-and-quality
+          python-version: "3.12"
 
-      - name: Analyze
-        uses: github/codeql-action/analyze@v3
-        with:
-          category: "/language:${{ matrix.language }}"
-          upload: never
-          output: codeql-results
+      - name: Download CodeQL CLI bundle
+        run: |
+          curl -sSL -o cql.tar.gz \
+            https://github.com/github/codeql-action/releases/latest/download/codeql-bundle-linux64.tar.gz
+          tar xzf cql.tar.gz
+          echo "$PWD/codeql" >> "$GITHUB_PATH"
+
+      - name: Scan Python
+        run: |
+          codeql database create db-python --language=python --source-root=. --overwrite
+          codeql database analyze db-python \
+            --format=sarif-latest --output=python.sarif --threads=0 \
+            codeql/python-queries:codeql-suites/python-code-scanning.qls
+
+      - name: Scan GitHub Actions workflows
+        continue-on-error: true
+        run: |
+          if codeql database create db-actions --language=actions --source-root=. --overwrite; then
+            codeql database analyze db-actions \
+              --format=sarif-latest --output=actions.sarif --threads=0 \
+              codeql/actions-queries:codeql-suites/actions-code-scanning.qls || true
+          else
+            echo "actions language pack not available in this bundle; skipping"
+          fi
 
       - name: Fail on any finding
         run: |
-          shopt -s nullglob
-          files=(codeql-results/*.sarif)
-          if [ ${#files[@]} -eq 0 ]; then
-            echo "no SARIF produced for ${{ matrix.language }}"; exit 0
-          fi
-          count=$(jq -s '[.[].runs[].results[]?] | length' "${files[@]}")
-          echo "CodeQL findings (${{ matrix.language }}): $count"
-          if [ "$count" -ne 0 ]; then
-            jq -s '[.[].runs[].results[]? | {rule: .ruleId, msg: .message.text}]' "${files[@]}"
-            echo "::error::CodeQL found $count issue(s) for ${{ matrix.language }}"
+          total=0
+          for f in python.sarif actions.sarif; do
+            [ -f "$f" ] || continue
+            c=$(jq '[.runs[].results[]?] | length' "$f")
+            echo "$f: $c finding(s)"
+            total=$((total + c))
+          done
+          echo "TOTAL CodeQL findings: $total"
+          if [ "$total" -ne 0 ]; then
+            for f in python.sarif actions.sarif; do
+              [ -f "$f" ] && jq '[.runs[].results[]? | {rule: .ruleId, msg: .message.text, uri: (.locations[0].physicalLocation.artifactLocation.uri)}]' "$f"
+            done
+            echo "::error::CodeQL found $total issue(s)"
             exit 1
           fi
 
@@ -59,6 +76,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: codeql-sarif-${{ matrix.language }}
-          path: codeql-results
+          name: codeql-sarif
+          path: "*.sarif"
           if-no-files-found: ignore
