@@ -10,7 +10,7 @@ depart_window:
   to: +21d
 
 # Inclusive [min, max] total trip length in days.
-trip_length_days: [10, 20]
+trip_length_days: [10, 22]
 
 cabins: [ECONOMY, PREMIUM_ECONOMY, BUSINESS]
 
@@ -24,7 +24,7 @@ currency: USD
 target_price_usd: 1500
 
 # When to email: only_drops | every_run | only_target | every_run_plus_drops
-alert_policy: only_drops
+alert_policy: every_run_plus_drops
 
 # Coarse-first sampling to keep the search cheap; tune reactively.
 sampling:
