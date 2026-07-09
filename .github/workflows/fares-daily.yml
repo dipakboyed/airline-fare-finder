@@ -83,6 +83,7 @@ jobs:
           {
             echo "REPORT_HTML<<$DELIM"
             cat report.html
+            echo
             echo "$DELIM"
           } >> "$GITHUB_ENV"
 
