@@ -99,5 +99,7 @@ def test_load_all_picks_up_directory():
     from pathlib import Path
 
     d = Path(__file__).resolve().parents[1] / "config" / "searches"
-    cfgs = load_all_search_configs(d, today=date(2026, 1, 1))
-    assert any(c.name == "sea-ccu" for c in cfgs)
+    files = sorted(p for p in d.iterdir() if p.is_file())
+    cfgs = load_all_search_configs(d, today=date(2026, 7, 22))
+    assert all(p.suffix in {".yaml", ".yml"} for p in files)
+    assert {c.name for c in cfgs} == {p.stem for p in files}

@@ -1,4 +1,4 @@
-# Case #1: SEA -> CCU, next 3 weeks, 10-20 day trip, best fare per cabin.
+# SEA -> LIH, November 2026, 4-6 day trip, best fare per cabin.
 name: sea-lih
 origin: SEA
 destination: LIH
@@ -7,14 +7,13 @@ max_stops: 0
 # Departure window. Relative tokens: "today", "+Nd". Or an ISO date (YYYY-MM-DD).
 depart_window:
   from: 2026-11-21
-  to: +5d
+  to: 2026-11-26
 
 # Inclusive [min, max] total trip length in days.
 trip_length_days: [4, 6]
 
 cabins: [ECONOMY, PREMIUM_ECONOMY, BUSINESS]
 
-# IATA airline codes: Singapore, Emirates, Qatar (all offer 1-stop SEA->CCU).
 preferred_airlines: []
 
 passengers: 4
