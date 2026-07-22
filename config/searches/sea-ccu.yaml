@@ -6,11 +6,11 @@ max_stops: 1
 
 # Departure window. Relative tokens: "today", "+Nd". Or an ISO date (YYYY-MM-DD).
 depart_window:
-  from: today
-  to: +21d
+  from: 2026-12-19
+  to: +13d
 
 # Inclusive [min, max] total trip length in days.
-trip_length_days: [10, 22]
+trip_length_days: [10, 14]
 
 cabins: [ECONOMY, PREMIUM_ECONOMY, BUSINESS]
 
