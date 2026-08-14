@@ -6,11 +6,11 @@ max_stops: 1
 
 # Departure window. Relative tokens: "today", "+Nd". Or an ISO date (YYYY-MM-DD).
 depart_window:
-  from: 2026-12-19
-  to: 2027-01-02
+  from: 2026-11-21
+  to: 2026-12-01
 
 # Inclusive [min, max] total trip length in days.
-trip_length_days: [10, 14]
+trip_length_days: [7, 16]
 
 cabins: [ECONOMY, PREMIUM_ECONOMY, BUSINESS]
 
@@ -29,7 +29,7 @@ alert_policy: every_run_plus_drops
 # Coarse-first sampling to keep the search cheap; tune reactively.
 sampling:
   depart_step_days: 1
-  trip_length_step_days: 2
+  trip_length_step_days: 1
 
 # Max cross-check (Travelpayouts) confirmations per run.
 crosscheck_max_calls_per_run: 15
