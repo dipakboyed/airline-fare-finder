@@ -15,7 +15,7 @@ trip_length_days: [7, 16]
 cabins: [ECONOMY, PREMIUM_ECONOMY, BUSINESS]
 
 # IATA airline codes: Singapore, Emirates, Qatar (all offer 1-stop SEA->CCU).
-preferred_airlines: [SQ, EK, QR]
+preferred_airlines: [SQ]
 
 passengers: 1
 currency: USD
