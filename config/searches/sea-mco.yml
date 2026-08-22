@@ -1,0 +1,35 @@
+# Case #1: SEA -> MCO, , 3 day trip, best fare per cabin.
+name: sea-mco
+origin: SEA
+destination: MCO
+max_stops: 0
+
+# Departure window. Relative tokens: "today", "+Nd". Or an ISO date (YYYY-MM-DD).
+depart_window:
+  from: 2026-12-10
+  to: 2026-12-10
+
+# Inclusive [min, max] total trip length in days.
+trip_length_days: [3, 4]
+
+cabins: [ECONOMY, PREMIUM_ECONOMY, BUSINESS]
+
+# IATA airline codes: 
+preferred_airlines: []
+
+passengers: 2
+currency: USD
+
+# Fares at or below this (USD) are flagged as deals.
+target_price_usd: 500
+
+# When to email: only_drops | every_run | only_target | every_run_plus_drops
+alert_policy: every_run_plus_drops
+
+# Coarse-first sampling to keep the search cheap; tune reactively.
+sampling:
+  depart_step_days: 1
+  trip_length_step_days: 1
+
+# Max cross-check (Travelpayouts) confirmations per run.
+crosscheck_max_calls_per_run: 15
