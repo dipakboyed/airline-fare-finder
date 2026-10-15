@@ -1,0 +1,14 @@
+{
+  "config_name": "sea-ccu",
+  "origin": "SEA",
+  "destination": "CCU",
+  "generated_at": "2026-10-15T18:59:11.875908+00:00",
+  "best_by_cabin": {},
+  "all_offers": [],
+  "crosscheck_calls": 12,
+  "google_offer_count": 0,
+  "date_pairs": 12,
+  "notes": [
+    "google returned no offers (possibly blocked); relying on cross-check"
+  ]
+}
