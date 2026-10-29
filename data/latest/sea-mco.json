@@ -2,7 +2,7 @@
   "config_name": "sea-mco",
   "origin": "SEA",
   "destination": "MCO",
-  "generated_at": "2026-10-28T20:11:29.032943+00:00",
+  "generated_at": "2026-10-29T20:08:57.216269+00:00",
   "best_by_cabin": {
     "ECONOMY": {
       "origin": "SEA",
@@ -10,14 +10,14 @@
       "depart_date": "2026-12-10",
       "return_date": "2026-12-12",
       "cabin": "ECONOMY",
-      "airline": "AS",
-      "price": 854.0,
+      "airline": "DL",
+      "price": 1056.0,
       "currency": "USD",
       "stops_out": 0,
       "stops_ret": 0,
       "source": "google",
       "booking_url": "https://www.google.com/travel/flights?q=Flights%20from%20SEA%20to%20MCO%20on%202026-12-10%20through%202026-12-12%20economy",
-      "fetched_at": "2026-10-28T20:11:11.880386+00:00"
+      "fetched_at": "2026-10-29T20:08:40.575142+00:00"
     },
     "BUSINESS": {
       "origin": "SEA",
@@ -26,13 +26,13 @@
       "return_date": "2026-12-14",
       "cabin": "BUSINESS",
       "airline": "AS",
-      "price": 3504.0,
+      "price": 3424.0,
       "currency": "USD",
       "stops_out": 0,
       "stops_ret": 0,
       "source": "google",
       "booking_url": "https://www.google.com/travel/flights?q=Flights%20from%20SEA%20to%20MCO%20on%202026-12-11%20through%202026-12-14%20business",
-      "fetched_at": "2026-10-28T20:11:27.825537+00:00"
+      "fetched_at": "2026-10-29T20:08:56.020459+00:00"
     }
   },
   "all_offers": [
@@ -42,14 +42,14 @@
       "depart_date": "2026-12-10",
       "return_date": "2026-12-12",
       "cabin": "ECONOMY",
-      "airline": "AS",
-      "price": 854.0,
+      "airline": "DL",
+      "price": 1056.0,
       "currency": "USD",
       "stops_out": 0,
       "stops_ret": 0,
       "source": "google",
       "booking_url": "https://www.google.com/travel/flights?q=Flights%20from%20SEA%20to%20MCO%20on%202026-12-10%20through%202026-12-12%20economy",
-      "fetched_at": "2026-10-28T20:11:11.880386+00:00"
+      "fetched_at": "2026-10-29T20:08:40.575142+00:00"
     },
     {
       "origin": "SEA",
@@ -58,43 +58,13 @@
       "return_date": "2026-12-12",
       "cabin": "ECONOMY",
       "airline": "AS",
-      "price": 854.0,
+      "price": 1082.0,
       "currency": "USD",
       "stops_out": 0,
       "stops_ret": 0,
       "source": "google",
       "booking_url": "https://www.google.com/travel/flights?q=Flights%20from%20SEA%20to%20MCO%20on%202026-12-10%20through%202026-12-12%20economy",
-      "fetched_at": "2026-10-28T20:11:11.880386+00:00"
-    },
-    {
-      "origin": "SEA",
-      "destination": "MCO",
-      "depart_date": "2026-12-10",
-      "return_date": "2026-12-12",
-      "cabin": "ECONOMY",
-      "airline": "DL",
-      "price": 1056.0,
-      "currency": "USD",
-      "stops_out": 0,
-      "stops_ret": 0,
-      "source": "google",
-      "booking_url": "https://www.google.com/travel/flights?q=Flights%20from%20SEA%20to%20MCO%20on%202026-12-10%20through%202026-12-12%20economy",
-      "fetched_at": "2026-10-28T20:11:11.880386+00:00"
-    },
-    {
-      "origin": "SEA",
-      "destination": "MCO",
-      "depart_date": "2026-12-10",
-      "return_date": "2026-12-12",
-      "cabin": "ECONOMY",
-      "airline": "AS",
-      "price": 1194.0,
-      "currency": "USD",
-      "stops_out": 0,
-      "stops_ret": 0,
-      "source": "google",
-      "booking_url": "https://www.google.com/travel/flights?q=Flights%20from%20SEA%20to%20MCO%20on%202026-12-10%20through%202026-12-12%20economy",
-      "fetched_at": "2026-10-28T20:11:11.880386+00:00"
+      "fetched_at": "2026-10-29T20:08:40.575142+00:00"
     },
     {
       "origin": "SEA",
@@ -103,28 +73,13 @@
       "return_date": "2026-12-13",
       "cabin": "ECONOMY",
       "airline": "AS",
-      "price": 994.0,
+      "price": 1222.0,
       "currency": "USD",
       "stops_out": 0,
       "stops_ret": 0,
       "source": "google",
       "booking_url": "https://www.google.com/travel/flights?q=Flights%20from%20SEA%20to%20MCO%20on%202026-12-10%20through%202026-12-13%20economy",
-      "fetched_at": "2026-10-28T20:11:13.321214+00:00"
-    },
-    {
-      "origin": "SEA",
-      "destination": "MCO",
-      "depart_date": "2026-12-10",
-      "return_date": "2026-12-13",
-      "cabin": "ECONOMY",
-      "airline": "AS",
-      "price": 994.0,
-      "currency": "USD",
-      "stops_out": 0,
-      "stops_ret": 0,
-      "source": "google",
-      "booking_url": "https://www.google.com/travel/flights?q=Flights%20from%20SEA%20to%20MCO%20on%202026-12-10%20through%202026-12-13%20economy",
-      "fetched_at": "2026-10-28T20:11:13.321214+00:00"
+      "fetched_at": "2026-10-29T20:08:41.979676+00:00"
     },
     {
       "origin": "SEA",
@@ -133,13 +88,13 @@
       "return_date": "2026-12-13",
       "cabin": "ECONOMY",
       "airline": "DL",
-      "price": 1056.0,
+      "price": 1594.0,
       "currency": "USD",
       "stops_out": 0,
       "stops_ret": 0,
       "source": "google",
       "booking_url": "https://www.google.com/travel/flights?q=Flights%20from%20SEA%20to%20MCO%20on%202026-12-10%20through%202026-12-13%20economy",
-      "fetched_at": "2026-10-28T20:11:13.321214+00:00"
+      "fetched_at": "2026-10-29T20:08:41.979676+00:00"
     },
     {
       "origin": "SEA",
@@ -147,14 +102,14 @@
       "depart_date": "2026-12-10",
       "return_date": "2026-12-13",
       "cabin": "ECONOMY",
-      "airline": "AS",
-      "price": 1334.0,
+      "airline": "DL",
+      "price": 2056.0,
       "currency": "USD",
       "stops_out": 0,
       "stops_ret": 0,
       "source": "google",
       "booking_url": "https://www.google.com/travel/flights?q=Flights%20from%20SEA%20to%20MCO%20on%202026-12-10%20through%202026-12-13%20economy",
-      "fetched_at": "2026-10-28T20:11:13.321214+00:00"
+      "fetched_at": "2026-10-29T20:08:41.979676+00:00"
     },
     {
       "origin": "SEA",
@@ -163,28 +118,13 @@
       "return_date": "2026-12-13",
       "cabin": "ECONOMY",
       "airline": "AS",
-      "price": 974.0,
+      "price": 1162.0,
       "currency": "USD",
       "stops_out": 0,
       "stops_ret": 0,
       "source": "google",
       "booking_url": "https://www.google.com/travel/flights?q=Flights%20from%20SEA%20to%20MCO%20on%202026-12-11%20through%202026-12-13%20economy",
-      "fetched_at": "2026-10-28T20:11:14.711954+00:00"
-    },
-    {
-      "origin": "SEA",
-      "destination": "MCO",
-      "depart_date": "2026-12-11",
-      "return_date": "2026-12-13",
-      "cabin": "ECONOMY",
-      "airline": "AS",
-      "price": 1034.0,
-      "currency": "USD",
-      "stops_out": 0,
-      "stops_ret": 0,
-      "source": "google",
-      "booking_url": "https://www.google.com/travel/flights?q=Flights%20from%20SEA%20to%20MCO%20on%202026-12-11%20through%202026-12-13%20economy",
-      "fetched_at": "2026-10-28T20:11:14.711954+00:00"
+      "fetched_at": "2026-10-29T20:08:43.351571+00:00"
     },
     {
       "origin": "SEA",
@@ -193,28 +133,13 @@
       "return_date": "2026-12-13",
       "cabin": "ECONOMY",
       "airline": "DL",
-      "price": 1056.0,
+      "price": 1276.0,
       "currency": "USD",
       "stops_out": 0,
       "stops_ret": 0,
       "source": "google",
       "booking_url": "https://www.google.com/travel/flights?q=Flights%20from%20SEA%20to%20MCO%20on%202026-12-11%20through%202026-12-13%20economy",
-      "fetched_at": "2026-10-28T20:11:14.711954+00:00"
-    },
-    {
-      "origin": "SEA",
-      "destination": "MCO",
-      "depart_date": "2026-12-11",
-      "return_date": "2026-12-13",
-      "cabin": "ECONOMY",
-      "airline": "AS",
-      "price": 1242.0,
-      "currency": "USD",
-      "stops_out": 0,
-      "stops_ret": 0,
-      "source": "google",
-      "booking_url": "https://www.google.com/travel/flights?q=Flights%20from%20SEA%20to%20MCO%20on%202026-12-11%20through%202026-12-13%20economy",
-      "fetched_at": "2026-10-28T20:11:14.711954+00:00"
+      "fetched_at": "2026-10-29T20:08:43.351571+00:00"
     },
     {
       "origin": "SEA",
@@ -229,7 +154,7 @@
       "stops_ret": 0,
       "source": "google",
       "booking_url": "https://www.google.com/travel/flights?q=Flights%20from%20SEA%20to%20MCO%20on%202026-12-11%20through%202026-12-14%20economy",
-      "fetched_at": "2026-10-28T20:11:16.101828+00:00"
+      "fetched_at": "2026-10-29T20:08:44.804121+00:00"
     },
     {
       "origin": "SEA",
@@ -238,43 +163,13 @@
       "return_date": "2026-12-14",
       "cabin": "ECONOMY",
       "airline": "AS",
-      "price": 1164.0,
+      "price": 1162.0,
       "currency": "USD",
       "stops_out": 0,
       "stops_ret": 0,
       "source": "google",
       "booking_url": "https://www.google.com/travel/flights?q=Flights%20from%20SEA%20to%20MCO%20on%202026-12-11%20through%202026-12-14%20economy",
-      "fetched_at": "2026-10-28T20:11:16.101828+00:00"
-    },
-    {
-      "origin": "SEA",
-      "destination": "MCO",
-      "depart_date": "2026-12-11",
-      "return_date": "2026-12-14",
-      "cabin": "ECONOMY",
-      "airline": "AS",
-      "price": 1224.0,
-      "currency": "USD",
-      "stops_out": 0,
-      "stops_ret": 0,
-      "source": "google",
-      "booking_url": "https://www.google.com/travel/flights?q=Flights%20from%20SEA%20to%20MCO%20on%202026-12-11%20through%202026-12-14%20economy",
-      "fetched_at": "2026-10-28T20:11:16.101828+00:00"
-    },
-    {
-      "origin": "SEA",
-      "destination": "MCO",
-      "depart_date": "2026-12-11",
-      "return_date": "2026-12-14",
-      "cabin": "ECONOMY",
-      "airline": "AS",
-      "price": 1432.0,
-      "currency": "USD",
-      "stops_out": 0,
-      "stops_ret": 0,
-      "source": "google",
-      "booking_url": "https://www.google.com/travel/flights?q=Flights%20from%20SEA%20to%20MCO%20on%202026-12-11%20through%202026-12-14%20economy",
-      "fetched_at": "2026-10-28T20:11:16.101828+00:00"
+      "fetched_at": "2026-10-29T20:08:44.804121+00:00"
     },
     {
       "origin": "SEA",
@@ -283,13 +178,13 @@
       "return_date": "2026-12-12",
       "cabin": "BUSINESS",
       "airline": "AS",
-      "price": 5414.0,
+      "price": 5354.0,
       "currency": "USD",
       "stops_out": 0,
       "stops_ret": 0,
       "source": "google",
       "booking_url": "https://www.google.com/travel/flights?q=Flights%20from%20SEA%20to%20MCO%20on%202026-12-10%20through%202026-12-12%20business",
-      "fetched_at": "2026-10-28T20:11:23.184852+00:00"
+      "fetched_at": "2026-10-29T20:08:51.834406+00:00"
     },
     {
       "origin": "SEA",
@@ -304,7 +199,7 @@
       "stops_ret": 0,
       "source": "google",
       "booking_url": "https://www.google.com/travel/flights?q=Flights%20from%20SEA%20to%20MCO%20on%202026-12-10%20through%202026-12-12%20business",
-      "fetched_at": "2026-10-28T20:11:23.184852+00:00"
+      "fetched_at": "2026-10-29T20:08:51.834406+00:00"
     },
     {
       "origin": "SEA",
@@ -313,13 +208,13 @@
       "return_date": "2026-12-13",
       "cabin": "BUSINESS",
       "airline": "AS",
-      "price": 5414.0,
+      "price": 5354.0,
       "currency": "USD",
       "stops_out": 0,
       "stops_ret": 0,
       "source": "google",
       "booking_url": "https://www.google.com/travel/flights?q=Flights%20from%20SEA%20to%20MCO%20on%202026-12-10%20through%202026-12-13%20business",
-      "fetched_at": "2026-10-28T20:11:24.634197+00:00"
+      "fetched_at": "2026-10-29T20:08:53.183641+00:00"
     },
     {
       "origin": "SEA",
@@ -334,7 +229,7 @@
       "stops_ret": 0,
       "source": "google",
       "booking_url": "https://www.google.com/travel/flights?q=Flights%20from%20SEA%20to%20MCO%20on%202026-12-10%20through%202026-12-13%20business",
-      "fetched_at": "2026-10-28T20:11:24.634197+00:00"
+      "fetched_at": "2026-10-29T20:08:53.183641+00:00"
     },
     {
       "origin": "SEA",
@@ -343,13 +238,13 @@
       "return_date": "2026-12-13",
       "cabin": "BUSINESS",
       "airline": "AS",
-      "price": 4134.0,
+      "price": 4002.0,
       "currency": "USD",
       "stops_out": 0,
       "stops_ret": 0,
       "source": "google",
       "booking_url": "https://www.google.com/travel/flights?q=Flights%20from%20SEA%20to%20MCO%20on%202026-12-11%20through%202026-12-13%20business",
-      "fetched_at": "2026-10-28T20:11:26.275049+00:00"
+      "fetched_at": "2026-10-29T20:08:54.599660+00:00"
     },
     {
       "origin": "SEA",
@@ -364,7 +259,7 @@
       "stops_ret": 0,
       "source": "google",
       "booking_url": "https://www.google.com/travel/flights?q=Flights%20from%20SEA%20to%20MCO%20on%202026-12-11%20through%202026-12-13%20business",
-      "fetched_at": "2026-10-28T20:11:26.275049+00:00"
+      "fetched_at": "2026-10-29T20:08:54.599660+00:00"
     },
     {
       "origin": "SEA",
@@ -373,13 +268,13 @@
       "return_date": "2026-12-14",
       "cabin": "BUSINESS",
       "airline": "AS",
-      "price": 3504.0,
+      "price": 3424.0,
       "currency": "USD",
       "stops_out": 0,
       "stops_ret": 0,
       "source": "google",
       "booking_url": "https://www.google.com/travel/flights?q=Flights%20from%20SEA%20to%20MCO%20on%202026-12-11%20through%202026-12-14%20business",
-      "fetched_at": "2026-10-28T20:11:27.825537+00:00"
+      "fetched_at": "2026-10-29T20:08:56.020459+00:00"
     },
     {
       "origin": "SEA",
@@ -388,13 +283,13 @@
       "return_date": "2026-12-14",
       "cabin": "BUSINESS",
       "airline": "AS",
-      "price": 3504.0,
+      "price": 3424.0,
       "currency": "USD",
       "stops_out": 0,
       "stops_ret": 0,
       "source": "google",
       "booking_url": "https://www.google.com/travel/flights?q=Flights%20from%20SEA%20to%20MCO%20on%202026-12-11%20through%202026-12-14%20business",
-      "fetched_at": "2026-10-28T20:11:27.825537+00:00"
+      "fetched_at": "2026-10-29T20:08:56.020459+00:00"
     },
     {
       "origin": "SEA",
@@ -403,13 +298,13 @@
       "return_date": "2026-12-14",
       "cabin": "BUSINESS",
       "airline": "AS",
-      "price": 4224.0,
+      "price": 4172.0,
       "currency": "USD",
       "stops_out": 0,
       "stops_ret": 0,
       "source": "google",
       "booking_url": "https://www.google.com/travel/flights?q=Flights%20from%20SEA%20to%20MCO%20on%202026-12-11%20through%202026-12-14%20business",
-      "fetched_at": "2026-10-28T20:11:27.825537+00:00"
+      "fetched_at": "2026-10-29T20:08:56.020459+00:00"
     },
     {
       "origin": "SEA",
@@ -424,11 +319,11 @@
       "stops_ret": 0,
       "source": "google",
       "booking_url": "https://www.google.com/travel/flights?q=Flights%20from%20SEA%20to%20MCO%20on%202026-12-11%20through%202026-12-14%20business",
-      "fetched_at": "2026-10-28T20:11:27.825537+00:00"
+      "fetched_at": "2026-10-29T20:08:56.020459+00:00"
     }
   ],
   "crosscheck_calls": 2,
-  "google_offer_count": 26,
+  "google_offer_count": 19,
   "date_pairs": 4,
   "notes": []
 }
