@@ -6,22 +6,22 @@ max_stops: 1
 
 # Departure window. Relative tokens: "today", "+Nd". Or an ISO date (YYYY-MM-DD).
 depart_window:
-  from: 2026-11-26
-  to: 2026-12-02
+  from: 2027-02-13
+  to: 2027-02-20
 
 # Inclusive [min, max] total trip length in days.
-trip_length_days: [4,7]
+trip_length_days: [5,7]
 
-cabins: [ECONOMY, PREMIUM_ECONOMY, BUSINESS]
+cabins: [PREMIUM_ECONOMY, BUSINESS]
 
 # IATA airline codes: Singapore, Emirates, Qatar (all offer 1-stop SEA->CCU).
 preferred_airlines: [SQ]
 
-passengers: 1
+passengers: 3
 currency: USD
 
 # Fares at or below this (USD) are flagged as deals.
-target_price_usd: 1500
+target_price_usd: 1900
 
 # When to email: only_drops | every_run | only_target | every_run_plus_drops
 alert_policy: every_run_plus_drops
