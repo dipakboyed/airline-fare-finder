@@ -1,0 +1,14 @@
+{
+  "config_name": "sea-chi",
+  "origin": "SEA",
+  "destination": "CHI",
+  "generated_at": "2026-11-22T20:59:10.304093+00:00",
+  "best_by_cabin": {},
+  "all_offers": [],
+  "crosscheck_calls": 8,
+  "google_offer_count": 0,
+  "date_pairs": 8,
+  "notes": [
+    "google returned no offers (possibly blocked); relying on cross-check"
+  ]
+}
